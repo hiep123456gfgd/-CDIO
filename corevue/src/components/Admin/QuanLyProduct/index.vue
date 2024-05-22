@@ -23,31 +23,35 @@
                                     <th>Thể Loại</th>
                                     <th>Hình Ảnh</th>
                                     <th>Mô tả</th>
-                                    <th>Số Lượng Còn Lại</th>
+                                    
                                     <th>Giá Bán</th>
-                                    <th>Tình trạng</th>
+                                    
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <th class="align-middle text-nowrap text-center">1</th>
-                                <td class="align-middle text-nowrap">Tên Sản Phẩm</td>
-                                <td class="align-middle text-nowrap">Thể Loại</td>
-                                <td class="align-middle text-center">
-                                    <img src="" class="img-fluid" style="height: 100px; width: 100%;" alt="">
-                                </td>
-                                <td class="align-middle text-nowrap">Mô Tả Ngắn</td>
-                                <td class="align-middle text-nowrap text-center">Số Lượng Còn Lại</td>
-                                <td class="align-middle text-nowrap text-end">Giá Bán đ</td>
-                                <td class="align-middle text-nowrap text-center">
-                                    <button class="btn btn-success">Hoạt Động</button>
-                                </td>
-                                <td class="align-middle text-nowrap text-center">
-                                    <button class="btn btn-primary me-2" data-bs-toggle="modal"
-                                        data-bs-target="#capNhatmodal">Cập Nhật</button>
-                                    <button class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#xoaModal">Xóa</button>
-                                </td>
+                            <tbody >
+                                <template v-for="(v,k) in list_san_pham">
+                                    <tr class="align-middle">
+                                        <th class=" text-nowrap text-center">{{ k+1 }}</th>
+                                        <td class=" text-nowrap">{{ v.name }}</td>
+                                        <td class=" text-nowrap">{{ v.catName }}</td>
+                                        <td class=" text-center">
+                                            <img v-bind:src="v.images" class="img-fluid" style="height: 100px; width: 100%;" alt="">
+                                        </td>
+                                        <td class=" text-nowrap">{{ v.description }}</td>
+                                        
+                                        <td class=" text-nowrap text-end">{{ v.price }}</td>
+                                        
+                                        <td class=" text-nowrap text-center">
+                                            <button @:click=" update_san_pham = v" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                                data-bs-target="#capNhatmodal">Cập Nhật</button>
+                                            <button @:click=" delete_san_pham = v" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#xoaModal">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    
+                                </template>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -67,47 +71,33 @@
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <label class="form-label">Tên Sản Phẩm</label>
-                                <input type="text" class="form-control">
+                                <input v-model="create_san_pham.name" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Hình Ảnh</label>
-                                <input type="email" class="form-control">
+                                <input v-model="create_san_pham.images" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Mô tả</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label class="form-label">Số Lượng Còn Lại</label>
-                                <input type="text" class="form-control">
+                                <input v-model="create_san_pham.description" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Giá Bán</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label class="form-label">Giá Khuyến Mãi</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label class="form-label">Tình trạng</label>
-                                <select class="form-select">
-                                    <option value="0">Tạm tắt</option>
-                                    <option value="1">Hiển thị</option>
-                                </select>
+                                <input v-model="create_san_pham.price" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Thể Loại</label>
-                                <select class="form-select">
-                                    <option value="0">Root</option>
-                                </select>
+                                <!-- <select  class="form-select">
+                                    <option value="0">Bể Cá</option>
+                                </select> -->
+                                <input v-model="create_san_pham.catName" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Close</button>
-                        <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Xác nhận</button>
+                        <button v-on:click="creSanPham()" data-bs-dismiss="modal" type="button" class="btn btn-primary">Xác nhận</button>
                     </div>
                 </div>
             </div>
@@ -125,44 +115,33 @@
                         <div class="row">
                             <div class="col-6 mb-2">
                                 <label class="form-label">Tên Sản Phẩm</label>
-                                <input type="text" class="form-control">
+                                <input v-model="update_san_pham.name" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Hình Ảnh</label>
-                                <input type="email" class="form-control">
+                                <input v-model="update_san_pham.images" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Mô tả</label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="col-6 mb-2">
-                                <label class="form-label">Số Lượng Còn Lại Nhập</label>
-                                <input type="text" class="form-control">
+                                <input v-model="update_san_pham.description" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Giá Bán</label>
-                                <input type="text" class="form-control">
-                            </div>
-                           
-                            <div class="col-6 mb-2">
-                                <label class="form-label">Tình trạng</label>
-                                <select class="form-select">
-                                    <option value="0">Tạm tắt</option>
-                                    <option value="1">Hiển thị</option>
-                                </select>
+                                <input v-model="update_san_pham.price" type="text" class="form-control">
                             </div>
                             <div class="col-6 mb-2">
                                 <label class="form-label">Thể Loại</label>
-                                <select class="form-select">
-                                    <option value="0">Root</option>
-                                </select>
+                                <!-- <select  class="form-select">
+                                    <option value="0">Bể Cá</option>
+                                </select> -->
+                                <input v-model="update_san_pham.catName" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Close</button>
-                        <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Xác
+                        <button v-on:click="udaSanPham()" data-bs-dismiss="modal" type="button" class="btn btn-primary">Xác
                             nhận</button>
                     </div>
                 </div>
@@ -186,7 +165,7 @@
                                 <div class="ms-3">
                                     <h6 class="mb-0 text-dark">Warning</h6>
                                     <div class="text-dark">
-                                        <p>Bạn có muốn xóa sản phẩm <b>XXX</b> này không?
+                                        <p>Bạn có muốn xóa sản phẩm <b>{{ delete_san_pham.name }}</b> này không?
                                         </p>
                                         <p>
                                             <b>Lưu ý:</b> Điều này không thể hoàn tác!
@@ -199,7 +178,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger">Xóa</button>
+                        <button v-on:click="delSanPham()" type="button" class="btn btn-danger">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -207,8 +186,56 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
-    
+  data() {
+      return {
+          list_san_pham: [],
+          update_san_pham: {},
+          create_san_pham: {},
+          delete_san_pham: {},
+          
+      }
+  },
+  mounted() {
+      this.loadSanPham();
+  },
+  methods: {
+    loadSanPham() {
+          axios
+              .get('http://127.0.0.1:8000/api/admin/danh-muc/data')
+              .then((res) => {
+                  this.list_san_pham = res.data.data;
+              });
+    },
+    creSanPham(){
+            axios
+                .post('http://127.0.0.1:8000/api/admin/danh-muc/create',this.create_san_pham)
+                .then((res) => {
+                        this.list_san_pham = res.data.data;
+                        alert(res.data.message);
+                        this.loadSanPham();
+                });
+        },
+    udaSanPham(){
+        axios
+            .put('http://127.0.0.1:8000/api/admin/danh-muc/update',this.update_san_pham)
+            .then((res) => {
+                    this.list_san_pham = res.data.data;
+                    alert(res.data.message);
+                    this.loadSanPham();
+            });
+    },
+    delSanPham(){
+        axios
+            .post('http://127.0.0.1:8000/api/admin/danh-muc/delete', this.delete_san_pham)
+            .then((res) => {
+                    alert(res.data.message);
+                    this.loadSanPham();
+            });
+    }, 
+      
+  },
 }
 </script>
 <style>
