@@ -6,8 +6,6 @@ import Customer from './layout/wrapper/Customer.vue'
 import dangnhap from './layout/wrapper/dangnhap.vue'
 const app = createApp(App)
 import store from './store';
-import Toast from 'vue-toastification';
-import 'vue-toastification/dist/index.css';
 
 app.use(router)
 app.component("default-layout", Default);
