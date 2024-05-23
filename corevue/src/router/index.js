@@ -16,7 +16,14 @@ const routes = [
         meta : {layout : 'customer'}
     },
     {
-        path : '/shop',
+        path: '/shop/:catName',
+        name: 'ShopCategory',
+        component: ()=>import('../components/Customer/Shop/index.vue'),
+        meta : {layout : 'customer'},
+        props: true
+    },
+    {
+        path: '/shop',
         component: ()=>import('../components/Customer/Shop/index.vue'),
         meta : {layout : 'customer'}
     },
