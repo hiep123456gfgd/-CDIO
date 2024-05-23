@@ -123,7 +123,7 @@ export default {
           console.log("Login successful:", response.data);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.data.user));
-          this.$router.push("/shop");
+          this.$router.push("/");
         })
         .catch((e) => {
           // Handle errors

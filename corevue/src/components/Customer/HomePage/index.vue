@@ -61,7 +61,8 @@
           <div class="product text-center">
             <div class="position-relative mb-3">
               <div class="badge text-white bg-"></div>
-              <a class="d-block" href="detail.html"
+
+              <a class="d-block" href="/"
                 ><img class="img-fluid w-100" :src="item.image" alt="..."
               /></a>
               <div class="product-overlay">
@@ -214,6 +215,7 @@ export default {
       }
       // Update localStorage with the updated cart items
       localStorage.setItem("cartItems", JSON.stringify(cartItems.value));
+      alert("Thêm vào giỏ hàng thành công")
     };
 
     // Function to remove an item from the cart
@@ -237,6 +239,7 @@ export default {
         }
         // Update localStorage with the updated cart items
         localStorage.setItem("cartItems", JSON.stringify(cartItems.value));
+        alert("Xóa khỏi giỏ hàng thành công")
       }
     };
 

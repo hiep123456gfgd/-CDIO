@@ -92,10 +92,17 @@
                   {{ user.email }}
                 </a>
               </li>
-              <li class="nav-item" v-else>
-                <a class="nav-link" href="/logincustomer">
-                  <i class="fas fa-user me-1 text-gray fw-normal"></i>Login
+              <li class="nav-item" v-if="token">
+                <a class="nav-link" href="/" @click="logout">
+                  Logout
                 </a>
+              </li>
+              <li class="nav-item" v-else>
+                <router-link to="/logincustomer">
+                  <a class="nav-link" href="/logincustomer">
+                    <i class="fas fa-user me-1 text-gray fw-normal"></i>Login
+                  </a>
+                </router-link>
               </li>
             </ul>
           </ul>
@@ -113,12 +120,27 @@ export default {
       cartItems: null,
     };
   },
+  methods: {
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('cartItems');
+      // Redirect to the login page
+      this.$router.push('/');
+      // Clear local data
+      this.token = "";
+      this.user = null;
+      this.cartItems = [];
+    }
+  },
   created() {
     // Retrieve the token from localStorage
     this.token = localStorage.getItem("token");
     this.user = JSON.parse(localStorage.getItem("user"));
     this.cartItems = JSON.parse(localStorage.getItem("cartItems"));
-    console.log(this.cartItems.length);
+    // if (!this.cartItems) {
+    //   this.cartItems = [];
+    // }
   },
 };
 </script>
